@@ -22,7 +22,9 @@ const translations = {
         freeLabel: "Free",
         supportLabel: "Support",
         langText: "العربية",
-        searchPlaceholder: "Search games..."
+        searchTitle: "Search Games",
+        searchPlaceholder: "Search games...",
+        noResults: "No games found"
     },
     ar: {
         menuTitle: "القائمة",
@@ -40,25 +42,38 @@ const translations = {
         ffScriptDesc: "أداة script متقدمة لـ Free Fire مع كشف رؤية الرأس التلقائي ومساعدة التصويب الدقيق.",
         aboutTitle: "عن GameZone",
         aboutText1: "مرحباً بك في GameZone، وجهتك النهائية للألعاب والترفيه المذهلة!",
-        aboutText2: "نحن نوفر مجموعة منتقاة بعناية من أفضل الألعاب من جميع أنحاء العالم. سواء كنت مهتماً بألعاب الحركة أو المغامرة أو السباق أو الألعاب التنافسية، فإن GameZone لديها شيء للجميع.",
-        aboutText3: "تابعنا على وسائل التواصل الاجتماعي لآخر التحديثات والألعاب الجديدة والمحتوى الحصري. انضم إلى مجتمعنا اللاعب اليوم!",
+        aboutText2: "نحن نوفر مجموعة منتقاة بعناية من أفضل الألعاب من جميع أنحاء العالم. سواء كنت مهتماً بألعاب الحركة أو المغامرة أو السباق أو الألعاب التنافسية، لدى GameZone شيء للجميع.",
+        aboutText3: "تابعنا على وسائل التواصل الاجتماعي لآخر التحديثات والألعاب الجديدة والمحتوى الحصري. انضم إلى مجتمع الألعاب لدينا اليوم!",
         gamesCount: "ألعاب",
         freeLabel: "مجاني",
         supportLabel: "الدعم",
         langText: "English",
-        searchPlaceholder: "ابحث عن ألعاب..."
+        searchTitle: "البحث عن الألعاب",
+        searchPlaceholder: "ابحث عن ألعاب...",
+        noResults: "لم يتم العثور على ألعاب"
     }
 };
 
 // Current language
 let currentLang = localStorage.getItem('language') || 'en';
 
+// Game data
+const games = [
+    { name: "Grand Theft Auto V", id: 1, image: "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg", rating: "4.8" },
+    { name: "Forza Horizon 5", id: 2, image: "https://cdn.akamai.steamstatic.com/steam/apps/1551360/header.jpg", rating: "4.7" },
+    { name: "Red Dead Redemption 2", id: 3, image: "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg", rating: "4.9" },
+    { name: "Fall Guys", id: 4, image: "https://img.utdstc.com/icon/121/3e2/1213e2bac4111360c073483b82c033bae5691ebb752bb639acf5413efdf7938b:200", rating: "4.5" },
+    { name: "God of War", id: 5, image: "https://m.media-amazon.com/images/M/MV5BNjJiNTFhY2QtNzZkYi00MDNiLWEzNGEtNWE1NzBkOWIxNmY5XkEyXkFqcGc@._V1_.jpg", rating: "4.8" },
+    { name: "Fortnite", id: 6, image: "https://play-lh.googleusercontent.com/FxJDPDIDJKlG9C8lOxaS041X27A0SrHAa46SGDIpPusAd4IEJihZTyGf-8rTZ_GpF34aeLvULilVuO0cpCJxTg=w600-h300-pc0xffffff-pd", rating: "4.6" },
+    { name: "Free Fire", id: 7, image: "https://storage.googleapis.com/cdn.vcgamers.com/news/wp-content/uploads/2023/12/Script-FF-Auto-Headshot.jpg", rating: "4.7" }
+];
+
 // Initialize language on page load
 document.addEventListener('DOMContentLoaded', () => {
     setLanguage(currentLang);
     updatePageDirection();
     setupHamburgerMenu();
-    setupSearch();
+    setupSearchModal();
 });
 
 // Hamburger Menu
@@ -84,29 +99,103 @@ function setupHamburgerMenu() {
     });
 }
 
-// Search functionality
-function setupSearch() {
-    const searchInput = document.getElementById('searchInput');
-    const searchBtn = document.querySelector('.search-btn');
-    const gameCards = document.querySelectorAll('.game-card');
+// Search Modal Functionality
+function setupSearchModal() {
+    const searchIconBtn = document.getElementById('searchIconBtn');
+    const searchModal = document.getElementById('searchModal');
+    const closeSearchBtn = document.getElementById('closeSearchBtn');
+    const modalSearchInput = document.getElementById('modalSearchInput');
+    const searchResults = document.getElementById('searchResults');
+    const noResults = document.getElementById('noResults');
 
-    function filterGames() {
-        const searchTerm = searchInput.value.toLowerCase();
-        let visibleCount = 0;
+    // Open modal
+    searchIconBtn.addEventListener('click', () => {
+        searchModal.classList.add('active');
+        modalSearchInput.focus();
+    });
 
-        gameCards.forEach(card => {
-            const gameName = card.getAttribute('data-name').toLowerCase();
-            if (gameName.includes(searchTerm)) {
-                card.classList.remove('hidden');
-                visibleCount++;
-            } else {
-                card.classList.add('hidden');
-            }
+    // Close modal
+    closeSearchBtn.addEventListener('click', () => {
+        searchModal.classList.remove('active');
+        clearSearch();
+    });
+
+    // Close modal when clicking outside
+    searchModal.addEventListener('click', (e) => {
+        if (e.target === searchModal) {
+            searchModal.classList.remove('active');
+            clearSearch();
+        }
+    });
+
+    // Search functionality
+    modalSearchInput.addEventListener('keyup', (e) => {
+        performSearch(e.target.value);
+    });
+
+    // Real-time search
+    function performSearch(query) {
+        const searchTerm = query.toLowerCase();
+        searchResults.innerHTML = '';
+        noResults.style.display = 'none';
+
+        if (!searchTerm) {
+            return;
+        }
+
+        const filteredGames = games.filter(game => {
+            const gameName = game.name.toLowerCase();
+            return gameName.includes(searchTerm);
+        });
+
+        if (filteredGames.length === 0) {
+            noResults.style.display = 'block';
+            noResults.textContent = translations[currentLang].noResults;
+            return;
+        }
+
+        filteredGames.forEach(game => {
+            const resultItem = createResultItem(game);
+            searchResults.appendChild(resultItem);
         });
     }
 
-    searchInput.addEventListener('keyup', filterGames);
-    searchBtn.addEventListener('click', filterGames);
+    // Create result item element
+    function createResultItem(game) {
+        const div = document.createElement('div');
+        div.className = 'search-result-item';
+        div.innerHTML = `
+            <img src="${game.image}" alt="${game.name}" class="search-result-img">
+            <div class="search-result-info">
+                <h3>${game.name}</h3>
+                <p>Download and play your favorite game now!</p>
+                <div class="search-result-rating">
+                    <i class="fas fa-star"></i> ${game.rating}
+                </div>
+            </div>
+        `;
+        
+        div.addEventListener('click', () => {
+            const gameCard = document.querySelector(`[data-name="${game.name}"]`);
+            if (gameCard) {
+                gameCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                gameCard.style.boxShadow = '0 0 30px rgba(0, 212, 255, 0.6)';
+                setTimeout(() => {
+                    gameCard.style.boxShadow = '';
+                }, 2000);
+            }
+            searchModal.classList.remove('active');
+            clearSearch();
+        });
+
+        return div;
+    }
+
+    function clearSearch() {
+        modalSearchInput.value = '';
+        searchResults.innerHTML = '';
+        noResults.style.display = 'none';
+    }
 }
 
 // Language toggle
@@ -126,9 +215,9 @@ function setLanguage(lang) {
         }
     });
 
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.placeholder = translations[lang].searchPlaceholder;
+    const modalSearchInput = document.getElementById('modalSearchInput');
+    if (modalSearchInput) {
+        modalSearchInput.placeholder = translations[lang].searchPlaceholder;
     }
 }
 
@@ -158,4 +247,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
+});
+
+// Close search modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const searchModal = document.getElementById('searchModal');
+        if (searchModal.classList.contains('active')) {
+            searchModal.classList.remove('active');
+        }
+    }
 });
