@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameZone - متجر الألعاب</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Ctext x='50' y='60' font-size='40' font-weight='bold' fill='%2300d4ff' text-anchor='middle'%3EGZ%3C/text%3E%3C/svg%3E" alt="GameZone" class="logo-img">
+                <span>GameZone</span>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-box" placeholder="Search games..." />
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="nav-right">
+                <button class="language-toggle" id="langToggle">
+                    <i class="fas fa-globe"></i>
+                    <span id="langText">العربية</span>
+                </button>
+                <button class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="#home" id="homeLink"><i class="fas fa-home"></i> <span id="homeText">Home</span></a></li>
+                <li><a href="#about" id="aboutLink"><i class="fas fa-info-circle"></i> <span id="aboutText">About</span></a></li>
+            </ul>
+            <div class="social-mobile">
+                <a href="https://www.instagram.com/1game.zone.1?igsh=MTVpdmFscnVoOGpycA==" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@1.game.zone.1?_r=1&_t=ZP-96" target="_blank" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section">
+            <div class="section-header">
+                <h2 id="gamesTitle">Our Games</h2>
+                <p id="gamesSubtitle">Choose your favorite game and start playing now!</p>
+            </div>
+
+            <div class="games-grid" id="gamesGrid">
+                <!-- Game 1: GTA V -->
+                <div class="game-card" data-name="Grand Theft Auto V">
+                    <div class="game-image">
+                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg" alt="Grand Theft Auto V">
+                        <div class="game-overlay">
+                            <a href="https://gamezone771.blogspot.com/?m=1" class="play-btn">
+                                <i class="fas fa-play"></i> <span id="playText">Play Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Grand Theft Auto V</h3>
+                        <p id="gta5Desc">Experience an open-world adventure in a massive metropolis with unlimited possibilities and thrilling missions.</p>
+                        <div class="game-meta">
+                            <span class="free-badge">FREE</span>
+                            <span class="rating"><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 2: Forza Horizon 5 -->
+                <div class="game-card" data-name="Forza Horizon 5">
+                    <div class="game-image">
+                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1551360/header.jpg" alt="Forza Horizon 5 Mobile">
+                        <div class="game-overlay">
+                            <a href="https://gamezone771.blogspot.com/?m=1" class="play-btn">
+                                <i class="fas fa-play"></i> <span id="playText">Play Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Forza Horizon 5 Mobile</h3>
+                        <p id="forzaDesc">Race across stunning landscapes in high-speed competitions with amazing graphics and intense gameplay.</p>
+                        <div class="game-meta">
+                            <span class="free-badge">FREE</span>
+                            <span class="rating"><i class="fas fa-star"></i> 4.7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 3: Red Dead Redemption 2 -->
+                <div class="game-card" data-name="Red Dead Redemption 2">
+                    <div class="game-image">
+                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg" alt="Red Dead Redemption 2">
+                        <div class="game-overlay">
+                            <a href="https://gamezone771.blogspot.com/?m=1" class="play-btn">
+                                <i class="fas fa-play"></i> <span id="playText">Play Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Red Dead Redemption 2</h3>
+                        <p id="rdr2Desc">Immerse yourself in the Wild West with epic storylines, realistic characters, and breathtaking adventures.</p>
+                        <div class="game-meta">
+                            <span class="free-badge">FREE</span>
+                            <span class="rating"><i class="fas fa-star"></i> 4.9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 4: Fall Guys -->
+                <div class="game-card" data-name="Fall Guys">
+                    <div class="game-image">
+                        <img src="https://img.utdstc.com/icon/121/3e2/1213e2bac4111360c073483b82c033bae5691ebb752bb639acf5413efdf7938b:200" alt="Fall Guys: Ultimate Knockout">
+                        <div class="game-overlay">
+                            <a href="https://gamezone771.blogspot.com/?m=1" class="play-btn">
+                                <i class="fas fa-play"></i> <span id="playText">Play Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Fall Guys: Ultimate Knockout</h3>
+                        <p id="fallguysDesc">Join fun multiplayer challenges and compete with players worldwide in hilarious obstacle courses.</p>
+                        <div class="game-meta">
+                            <span class="free-badge">FREE</span>
+                            <span class="rating"><i class="fas fa-star"></i> 4.5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 5: God of War -->
+                <div class="game-card" data-name="God of War">
+                    <div class="game-image">
+                        <img src="https://m.media-amazon.com/images/M/MV5BNjJiNTFhY2QtNzZkYi00MDNiLWEzNGEtNWE1NzBkOWIxNmY5XkEyXkFqcGc@._V1_.jpg" alt="God of War">
+                        <div class="game-overlay">
+                            <a href="https://gamezone771.blogspot.com/?m=1" class="play-btn">
+                                <i class="fas fa-play"></i> <span id="playText">Play Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h3>God of War</h3>
+                        <p id="godofwarDesc">Battle legendary creatures and gods in an epic Norse mythology adventure with stunning combat systems.</p>
+                        <div class="game-meta">
+                            <span class="free-badge">FREE</span>
+                            <span class="rating"><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 6: Fortnite -->
+                <div class="game-card" data-name="Fortnite">
+                    <div class="game-image">
+                        <img src="https://play-lh.googleusercontent.com/FxJDPDIDJKlG9C8lOxaS041X27A0SrHAa46SGDIpPusAd4IEJihZTyGf-8rTZ_GpF34aeLvULilVuO0cpCJxTg=w600-h300-pc0xffffff-pd" alt="Fortnite">
+                        <div class="game-overlay">
+                            <a href="https://gamezone771.blogspot.com/?m=1" class="play-btn">
+                                <i class="fas fa-play"></i> <span id="playText">Play Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Fortnite</h3>
+                        <p id="fortniteDesc">Battle royale action with creative building mechanics, intense gameplay, and constant new content.</p>
+                        <div class="game-meta">
+                            <span class="free-badge">FREE</span>
+                            <span class="rating"><i class="fas fa-star"></i> 4.6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 7: Free Fire Script Headshot -->
+                <div class="game-card" data-name="Free Fire">
+                    <div class="game-image">
+                        <img src="https://storage.googleapis.com/cdn.vcgamers.com/news/wp-content/uploads/2023/12/Script-FF-Auto-Headshot.jpg" alt="Free Fire Script Headshot">
+                        <div class="game-overlay">
+                            <a href="https://gamezone771.blogspot.com/?m=1" class="play-btn">
+                                <i class="fas fa-play"></i> <span id="playText">Play Now</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Free Fire Script Headshot</h3>
+                        <p id="ffScriptDesc">Advanced script tool for Free Fire with automatic headshot detection and precision aiming assistance.</p>
+                        <div class="game-meta">
+                            <span class="free-badge">FREE</span>
+                            <span class="rating"><i class="fas fa-star"></i> 4.7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="section-header">
+                <h2 id="aboutTitle">About GameZone</h2>
+            </div>
+            <div class="about-content">
+                <p id="aboutText1">Welcome to GameZone, your ultimate destination for amazing games and entertainment!</p>
+                <p id="aboutText2">We provide a carefully curated collection of the best games from around the world. Whether you're into action, adventure, racing, or competitive gaming, GameZone has something for everyone.</p>
+                <p id="aboutText3">Follow us on social media for the latest updates, game releases, and exclusive content. Join our gaming community today!</p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <h4>7+</h4>
+                        <p id="gamesCount">Games</p>
+                    </div>
+                    <div class="stat">
+                        <h4>100%</h4>
+                        <p id="freeLabel">Free</p>
+                    </div>
+                    <div class="stat">
+                        <h4>24/7</h4>
+                        <p id="supportLabel">Support</p>
+                    </div>
+                </div>
+                <div class="social-desktop">
+                    <a href="https://www.instagram.com/1game.zone.1?igsh=MTVpdmFscnVoOGpycA==" target="_blank" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@1.game.zone.1?_r=1&_t=ZP-96" target="_blank" title="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+                      </html>
